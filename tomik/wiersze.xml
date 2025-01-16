@@ -1,0 +1,13 @@
+﻿<ArrayOfWiersz xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Wiersz>
+		<Tytul>Przykładowy Wiersz 1</Tytul>
+		<Zawartosc>To jest treść przykładowego wiersza 1.</Zawartosc>
+		<NumerStrony>1</NumerStrony>
+	</Wiersz>
+	<Wiersz>
+		<Tytul>Przykładowy Wiersz 2</Tytul>
+		<Zawartosc>To jest treść przykładowego wiersza 2.</Zawartosc>
+		<NumerStrony>2</NumerStrony>
+	</Wiersz>
+</ArrayOfWiersz>
+
