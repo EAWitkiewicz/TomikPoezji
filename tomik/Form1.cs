@@ -26,11 +26,56 @@ namespace tomik
         {
             listaWierszy = new ListaDwukierunkowa();
 
+            deserializacja();
 
-        
+            Wiersz aktualnyWiersz = listaWierszy.PobierzAktualny();
+
+
+            if (aktualnyWiersz != null)
+            {
+                lbTytul.Text = aktualnyWiersz.Tytul;
+                lbTresc.Text = aktualnyWiersz.Zawartosc;
+                lbNrStrony.Text = aktualnyWiersz.NumerStrony.ToString();
+            }
 
             przezoczystosc();
         }
+
+        public void deserializacja()
+        {
+            String ile = "";
+            uint i = 0;
+            XmlSerializer serializer = new XmlSerializer(typeof(String));
+            try
+            {
+                using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\Ile.xml", FileMode.Open, FileAccess.Read))
+                {
+                    ile = serializer.Deserialize(fs) as String;
+                    if (ile != null)
+                    {
+                        i = uint.Parse(ile);
+                    }
+                   
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                return;
+            }
+            Wiersz[] tablica = new Wiersz[i];
+            serializer = new XmlSerializer(typeof(Wiersz[]));
+            using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\wiersz.xml", FileMode.Open, FileAccess.Read))
+            {
+                tablica = serializer.Deserialize(fs) as Wiersz[];
+            }
+            for (uint j = 0; j < i; j++)
+            {
+               
+                this.listaWierszy.DodajWiersz(new Wiersz(tablica[j].Tytul, tablica[j].Zawartosc));
+            }
+        }
+
+
         private void przezoczystosc()
         {
             btnDopisz.FlatStyle = FlatStyle.Flat;
@@ -174,8 +219,27 @@ namespace tomik
         
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
-            
+            XmlSerializer serializer = new XmlSerializer(typeof(Wiersz[])); //utworzenie serializatora (no aby mógł zczytać)
+            Wiersz[] tablica = new Wiersz[listaWierszy.ile]; //utworzenie tablicy Mockupów produktowych. czyli klasa a'la NodeL, tylko bez prev, next, bo tego nie chcemy zapisać do xmla, bo mogło by się wyjebać.
+            Wezel wiersz = listaWierszy.pierwszy; //ustawienie "indeksu"
+            for (int i = 0; i < listaWierszy.ile; i++)
+            {
+
+                tablica[i] = new Wiersz(wiersz.Wiersz.Tytul,wiersz.Wiersz.Zawartosc); // przerzucenie z produktu do mockupa
+                wiersz = wiersz.Nastepny; //przejście dalej
+            }
+            using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\wiersz.xml", FileMode.Create, FileAccess.Write))
+            {
+                serializer.Serialize(fs, tablica);//serializacja tablicy
+
+
+            }
+            serializer = new XmlSerializer(typeof(String));
+            using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\Ile.xml", FileMode.Create, FileAccess.Write))
+            {
+                serializer.Serialize(fs, listaWierszy.ile.ToString());//serializacja ile elementów było
+            }
+
         }
     }
 }

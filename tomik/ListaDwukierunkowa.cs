@@ -11,9 +11,10 @@ namespace tomik
 {
     public class ListaDwukierunkowa
     {
-        private Wezel pierwszy;
-        private Wezel ostatni;
+        public Wezel pierwszy{ get; set; }
+        public Wezel ostatni{ get; set; }
         private Wezel aktualny { get; set; }
+        public int ile { get; set; }
         
 
         public ListaDwukierunkowa()
@@ -21,6 +22,7 @@ namespace tomik
             pierwszy = null;
             ostatni = null;
             aktualny = null;
+            ile = 0;
         }
 
 
@@ -39,6 +41,7 @@ namespace tomik
                 nowyWezel.Poprzedni = ostatni;
                 ostatni = nowyWezel;
             }
+            ile++;
             AktualizujNumeryStron();
         }
 
@@ -78,11 +81,10 @@ namespace tomik
                         aktualny = obecny.Nastepny;
                     }
 
-                    
+                    ile--;
                     AktualizujNumeryStron();
                     return;
                 }
-
                 obecny = obecny.Nastepny;
             }
         }
