@@ -137,19 +137,7 @@ namespace tomik
                 obecny = obecny.Nastepny;
             }
         }
-        public List<Wiersz> PobierzWszystkieWiersze()
-        {
-            List<Wiersz> wiersze = new List<Wiersz>();
-            Wezel obecny = pierwszy;
-
-            while (obecny != null)
-            {
-                wiersze.Add(obecny.Wiersz);
-                obecny = obecny.Nastepny;
-            }
-
-            return wiersze;
-        }
+        
 
     }
 }

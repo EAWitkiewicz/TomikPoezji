@@ -26,25 +26,8 @@ namespace tomik
         {
             listaWierszy = new ListaDwukierunkowa();
 
-            string sciezkaPliku = Path.Combine(Application.StartupPath, "wiersze.xml");
 
-            if (File.Exists(sciezkaPliku))
-            {
-                WczytajZPlikuXML(sciezkaPliku);
-
-                // Wyświetl pierwszy wiersz
-                Wiersz aktualnyWiersz = listaWierszy.PobierzAktualny();
-                if (aktualnyWiersz != null)
-                {
-                    lbTytul.Text = aktualnyWiersz.Tytul;
-                    lbTresc.Text = aktualnyWiersz.Zawartosc;
-                    lbNrStrony.Text = aktualnyWiersz.NumerStrony.ToString();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Plik XML z wierszami nie został znaleziony!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        
 
             przezoczystosc();
         }
@@ -142,8 +125,7 @@ namespace tomik
 
                     Wiersz nowyWiersz = new Wiersz(tytul, tresc);
                     listaWierszy.DodajWiersz(nowyWiersz);
-            string sciezkaPliku = Path.Combine(Application.StartupPath, "wiersze.xml");
-                    ZapiszDoPlikuXML(sciezkaPliku);
+            
 
                     listaWierszy.PrzejdzDoNastepnego();
                     Wiersz aktualnyWiersz = listaWierszy.PobierzAktualny();
@@ -189,43 +171,11 @@ namespace tomik
             }
         }
 
-        private void ZapiszDoPlikuXML(string sciezkaPliku)
-        {
-            List<Wiersz> wiersze = listaWierszy.PobierzWszystkieWiersze();
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Wiersz>));
-            using (StreamWriter writer = new StreamWriter(sciezkaPliku))
-            {
-                serializer.Serialize(writer, wiersze);
-            }
-            //MessageBox.Show("Dane zostały zapisane do pliku XML!");
-        }
-        private void WczytajZPlikuXML(string sciezkaPliku)
-        {
-            try
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Wiersz>));
-                using (StreamReader reader = new StreamReader(sciezkaPliku))
-                {
-                    List<Wiersz> wiersze = (List<Wiersz>)serializer.Deserialize(reader);
-
-                    
-                    listaWierszy = new ListaDwukierunkowa();
-                    foreach (Wiersz wiersz in wiersze)
-                    {
-                        listaWierszy.DodajWiersz(wiersz);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd podczas odczytu pliku XML: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             string sciezkaPliku = Path.Combine(Application.StartupPath, "wiersze.xml");
-            ZapiszDoPlikuXML(sciezkaPliku);
+            
         }
     }
 }

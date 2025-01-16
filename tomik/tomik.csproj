@@ -95,9 +95,6 @@
   <ItemGroup>
     <None Include="Resources\896c8d1d-6ff8-4659-835f-0f82ece3eb47.jpg" />
     <None Include="Resources\kartka.jpg" />
-    <Content Include="wiersze.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
