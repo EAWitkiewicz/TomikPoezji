@@ -174,7 +174,7 @@ namespace tomik
         
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            string sciezkaPliku = Path.Combine(Application.StartupPath, "wiersze.xml");
+            
             
         }
     }
