@@ -50,7 +50,7 @@ namespace tomik
             {
                 using (FileStream fs = new FileStream(path: Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Ile.xml", FileMode.Open, FileAccess.Read))
                 {
-                    MessageBox.Show(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName);
+                    
                     ile = serializer.Deserialize(fs) as String;
                     if (ile != null)
                     {
