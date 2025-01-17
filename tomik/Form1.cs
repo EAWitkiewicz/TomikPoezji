@@ -48,8 +48,9 @@ namespace tomik
             XmlSerializer serializer = new XmlSerializer(typeof(String));
             try
             {
-                using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\Ile.xml", FileMode.Open, FileAccess.Read))
+                using (FileStream fs = new FileStream(path: Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Ile.xml", FileMode.Open, FileAccess.Read))
                 {
+                    MessageBox.Show(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName);
                     ile = serializer.Deserialize(fs) as String;
                     if (ile != null)
                     {
@@ -64,7 +65,7 @@ namespace tomik
             }
             Wiersz[] tablica = new Wiersz[i];
             serializer = new XmlSerializer(typeof(Wiersz[]));
-            using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\wiersz.xml", FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(path: Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\wiersz.xml", FileMode.Open, FileAccess.Read))
             {
                 tablica = serializer.Deserialize(fs) as Wiersz[];
             }
@@ -228,14 +229,14 @@ namespace tomik
                 tablica[i] = new Wiersz(wiersz.Wiersz.Tytul,wiersz.Wiersz.Zawartosc); // przerzucenie z produktu do mockupa
                 wiersz = wiersz.Nastepny; //przejście dalej
             }
-            using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\wiersz.xml", FileMode.Create, FileAccess.Write))
+            using (FileStream fs = new FileStream(path: Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\wiersz.xml", FileMode.Create, FileAccess.Write))
             {
                 serializer.Serialize(fs, tablica);//serializacja tablicy
 
 
             }
             serializer = new XmlSerializer(typeof(String));
-            using (FileStream fs = new FileStream(path: Environment.CurrentDirectory + "\\Ile.xml", FileMode.Create, FileAccess.Write))
+            using (FileStream fs = new FileStream(path: Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Ile.xml", FileMode.Create, FileAccess.Write))
             {
                 serializer.Serialize(fs, listaWierszy.ile.ToString());//serializacja ile elementów było
             }
